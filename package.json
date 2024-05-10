@@ -13,7 +13,7 @@
     "@types/node": "^20.12.7",
     "bad-words-next": "^2.3.1",
     "cld": "^2.9.1",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
     "pouchdb": "^8.0.1"
   },
