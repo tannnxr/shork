@@ -1,0 +1,2 @@
+const pouch = require('pouchdb')
+
