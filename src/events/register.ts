@@ -2,6 +2,7 @@ import { Client } from "discord.js";
 import { readdir, stat } from "fs/promises";
 import path from "path";
 import { ShorkEvent } from "./event";
+import { Shork } from "../Shork";
 
 async function bindEvent(client: Client, eventPath: string): Promise<boolean> {
     let eventModule: ShorkEvent;
@@ -38,7 +39,7 @@ async function getFilesRecursively(directory: string): Promise<string[]> {
     return filePaths.flat();
 }
 
-export const registerEvents = async (client: Client): Promise<boolean> => {
+export const registerEvents = async (client: Shork): Promise<boolean> => {
     console.log("Registering Events...");
     try {
         const allFiles = await getFilesRecursively(__dirname);
@@ -53,6 +54,7 @@ export const registerEvents = async (client: Client): Promise<boolean> => {
             }
         }
         console.log(`Registered Events (${eventCount})`);
+		client.eventsRegistered = eventCount;
         return true;
     } catch (err) {
         console.error("Error registering events:", err);

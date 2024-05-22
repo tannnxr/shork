@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run:dev": "ts-node ./src/client.ts",
-    "run:build": "tsc --build"
+    "run:dev": "ts-node ./src/main.ts",
+	"run:build": "node ./dist/main.js",
+    "build": "tsc --build"
   },
   "keywords": [],
   "author": "",

@@ -41,7 +41,6 @@ async function bindEvent(client, eventPath) {
     const event = eventModule.default;
     if (event && event.name && event.execute) {
         client.addListener(event.name, event.execute);
-        console.log(`Registered event: ${event.name}`);
         return true;
     }
     else {
@@ -67,18 +66,16 @@ const registerEvents = async (client) => {
     console.log("Registering Events...");
     try {
         const allFiles = await getFilesRecursively(__dirname);
-        console.log("All files:", allFiles);
         const filtered = allFiles.filter(file => (file.endsWith('.js') || file.endsWith('.ts')) && !file.endsWith('.d.ts'));
-        console.log("Filtered files:", filtered);
         let eventCount = 0;
         for (const file of filtered) {
-            console.log("Processing file:", file);
             const success = await bindEvent(client, file);
             if (success) {
                 eventCount++;
             }
         }
-        console.log("Total events registered:", eventCount);
+        console.log(`Registered Events (${eventCount})`);
+        client.eventsRegistered = eventCount;
         return true;
     }
     catch (err) {
