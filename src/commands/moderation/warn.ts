@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandMentionableOption, SlashCommandStringOption } from "discord.js";
+import { LogType, Logger } from "../../utils/logging";
 
 export default {
     data: new SlashCommandBuilder()
@@ -15,6 +16,8 @@ export default {
                 .setRequired(false)),
 
     async execute(interaction: ChatInputCommandInteraction) {
-        console.log("test");
+        const logger = new Logger(__filename, LogType.DEBUG)
+
+		logger.log('warn command')
     }
 }
