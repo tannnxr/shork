@@ -1,12 +1,14 @@
 import { Client, EmbedBuilder, Events, TextChannel } from "discord.js";
 import { getChannel } from "../../utils/channel";
 import { Shork } from "../../Shork";
+import { LogType, Logger } from "../../utils/logging";
 
 export default {
   name: Events.ClientReady,
   execute: (client: Shork) => {
-    console.log("Client is ready.");
-    const logChannel = getChannel(client, "1195155705133535271");
+	const logger = new Logger(__filename, LogType.DEBUG)
+    logger.log("Client is ready.");
+    const logChannel = getChannel(client, "1243357415852867604");
     const clientReadyAt = client.readyAt;
     const embed = new EmbedBuilder()
       .setTitle(`${client.user?.displayName} | ${client.user?.id}`)
