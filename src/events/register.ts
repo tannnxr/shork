@@ -3,6 +3,9 @@ import { readdir, stat } from "fs/promises";
 import path from "path";
 import { ShorkEvent } from "./event";
 import { Shork } from "../Shork";
+import { LogType, Logger } from "../utils/logging";
+
+const logger = new Logger(__filename, LogType.DEBUG)
 
 async function bindEvent(client: Client, eventPath: string): Promise<boolean> {
     let eventModule: ShorkEvent;
@@ -10,7 +13,7 @@ async function bindEvent(client: Client, eventPath: string): Promise<boolean> {
     try {
         eventModule = await import(eventPath);
     } catch (error) {
-        console.error(`Failed to import ${eventPath}:`, error);
+        logger.log(`Failed to import ${eventPath}:`, LogType.ERROR);
         return false;
     }
 
@@ -20,7 +23,7 @@ async function bindEvent(client: Client, eventPath: string): Promise<boolean> {
         client.addListener(event.name, event.execute);
         return true;
     } else {
-        console.warn(`The file ${eventPath} is not an event, or is structured incorrectly.`);
+        logger.log(`The file ${eventPath} is not an event, or is structured incorrectly.`, LogType.WARN);
         return false;
     }
 }
@@ -40,7 +43,7 @@ async function getFilesRecursively(directory: string): Promise<string[]> {
 }
 
 export const registerEvents = async (client: Shork): Promise<boolean> => {
-    console.log("Registering Events...");
+    logger.log("Registering Events...");
     try {
         const allFiles = await getFilesRecursively(__dirname);
 
@@ -53,11 +56,11 @@ export const registerEvents = async (client: Shork): Promise<boolean> => {
                 eventCount++;
             }
         }
-        console.log(`Registered Events (${eventCount})`);
+        logger.log(`Registered Events (${eventCount})`, LogType.SUCCESS);
 		client.eventsRegistered = eventCount;
         return true;
     } catch (err) {
-        console.error("Error registering events:", err);
+        logger.log("Error registering events:", LogType.ERROR);
         return false;
     }
 };
