@@ -18,8 +18,8 @@ function isElligibleForXp(messageContent: string): boolean {
 }
 
 async function isEnglish(messageContent: string): Promise<boolean> {
-    const result = await cld.detect(messageContent)
-    console.log(result)
+    //const result = await cld.detect(messageContent)
+    //console.log(result)
     return true
 }
 
