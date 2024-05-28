@@ -18,7 +18,8 @@
     "cld": "^2.9.1",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
-    "pouchdb": "^8.0.1"
+    "pouchdb": "^8.0.1",
+    "redis": "^4.6.14"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
