@@ -7,7 +7,7 @@ export default {
   name: Events.ClientReady,
   execute: (client: Shork) => {
 	const logger = new Logger(__filename, LogType.DEBUG)
-    logger.log("Client is ready.");
+    logger.log("Client is ready.", LogType.SUCCESS);
     const logChannel = getChannel(client, "1243357415852867604");
     const clientReadyAt = client.readyAt;
     const embed = new EmbedBuilder()
