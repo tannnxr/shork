@@ -9,6 +9,7 @@ import { getFilesRecursively } from "./files";
 const logger = new Logger(__filename, LogType.DEBUG)
 
 export async function getCommandFiles() {
+	console.log(rootDir, typeof rootDir)
     const cmdDir = path.join(rootDir, 'commands')
 	if (!fs.existsSync(cmdDir)) {
 		logger.log(`Directory '${cmdDir}' does not exist. Failing.`, LogType.ERROR)
@@ -19,5 +20,5 @@ export async function getCommandFiles() {
 
 	const filteredCommands = commandFiles.filter(file => (file.endsWith('.js') || file.endsWith('.ts')) && !file.endsWith('.d.ts'));
 
-	shorkCache.set('commandFiles', JSON.stringify(filteredCommands))
+	return filteredCommands;
 }

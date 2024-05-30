@@ -7,7 +7,7 @@ import { LogType, Logger } from "../utils/logging";
 
 const logger = new Logger(__filename, LogType.DEBUG)
 
-async function bindEvent(client: Client, eventPath: string): Promise<boolean> {
+async function bindEvent(client: Shork, eventPath: string): Promise<boolean> {
     let eventModule: ShorkEvent;
 
     try {
@@ -42,23 +42,23 @@ async function getFilesRecursively(directory: string): Promise<string[]> {
     return filePaths.flat();
 }
 
-export const registerEvents = async (client: Shork): Promise<boolean> => {
+export const registerEvents = async (client: Shork): Promise<string[] | boolean> => {
     logger.log("Registering Events...");
     try {
         const allFiles = await getFilesRecursively(__dirname);
 
         const filtered = allFiles.filter(file => (file.endsWith('.js') || file.endsWith('.ts')) && !file.endsWith('.d.ts'));
 
-        let eventCount = 0;
+        let events = []
         for (const file of filtered) {
             const success = await bindEvent(client, file);
             if (success) {
-                eventCount++;
+                events.push(file)
             }
         }
-        logger.log(`Registered Events (${eventCount})`, LogType.SUCCESS);
-		client.eventsRegistered = eventCount;
-        return true;
+        logger.log(`Registered Events (${events.length})`, LogType.SUCCESS);
+		client.eventsRegistered = events;
+        return events
     } catch (err) {
         logger.log("Error registering events:", LogType.ERROR);
         return false;

@@ -18,7 +18,7 @@ const foldersPath = path.join(__dirname, 'commands');
 console.log(foldersPath)
 const commandFolders = fs.readdirSync(foldersPath);
 
-interface Command {
+export interface CommandReferenceType {
     data: any; // Adjust this to match the type of data
     execute(interaction: ChatInputCommandInteraction): Promise<void>;
 }
@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
 
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command: Command = require(filePath).default; // Use .default to import the default export
+        const command: CommandReferenceType = require(filePath).default; // Use .default to import the default export
         if ('data' in command && 'execute' in command) {
             commands.push(command.data.toJSON());
         } else {
