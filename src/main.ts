@@ -7,6 +7,8 @@ dotenv.config();
 
 const logger = new Logger(__filename, LogType.DEBUG);
 
+export const rootDir = __dirname;
+
 const SHORK = new Shork({
     intents: [
         GatewayIntentBits.Guilds,
@@ -20,7 +22,5 @@ const SHORK = new Shork({
 process.on('exit', (errCode) => {
 	logger.log(`Process Exiting (${errCode})`, LogType.ERROR);
 })
-
-export const rootDir = __dirname;
 
 SHORK.login(process.env.TOKEN);
