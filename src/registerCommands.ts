@@ -1,4 +1,4 @@
-import { REST, Routes } from 'discord.js';
+import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 import { config } from 'dotenv';
 import fs from 'fs';
 import path from 'path';
@@ -19,7 +19,7 @@ console.log(foldersPath)
 const commandFolders = fs.readdirSync(foldersPath);
 
 export interface CommandReferenceType {
-    data: any; // Adjust this to match the type of data
+    data: SlashCommandBuilder; // Adjust this to match the type of data
     execute(interaction: ChatInputCommandInteraction): Promise<void>;
 }
 
