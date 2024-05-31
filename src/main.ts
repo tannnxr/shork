@@ -10,17 +10,25 @@ const logger = new Logger(__filename, LogType.DEBUG);
 export const rootDir = __dirname;
 
 const SHORK = new Shork({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildModeration,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildModeration,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+	],
+});
+process.on("exit", (errCode) => {
+	logger.log(`Process Exiting (${errCode})`, LogType.ERROR);
 });
 
-process.on('exit', (errCode) => {
-	logger.log(`Process Exiting (${errCode})`, LogType.ERROR);
-})
+process.on("unhandledRejection", (reason, promise) => {
+	logger.log(`Unhandled Rejection: \n${reason}`);
+});
 
-SHORK.login(process.env.TOKEN);
+process.on("uncaughtException", (error, origin) => {
+	logger.log(`${error}`, LogType.ERROR);
+});
+(async () => {
+	await SHORK.start()
+})();
