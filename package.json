@@ -6,7 +6,8 @@
   "scripts": {
     "run:dev": "ts-node ./src/main.ts",
     "run:build": "node ./dist/main.js",
-    "build": "tsc --build"
+    "build": "tsc --build",
+	"update:commands": "ts-node ./src/registerCommands.ts"
   },
   "keywords": [],
   "author": "",
