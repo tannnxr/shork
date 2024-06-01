@@ -1,5 +1,6 @@
 import {
 	ChatInputCommandInteraction,
+	GuildMember,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
 	SlashCommandMentionableOption,
@@ -32,15 +33,17 @@ export default {
 		const logger = new Logger(__filename, LogType.DEBUG);
 
 		const options = interaction.options;
-		const member = options.getMentionable("user");
+		const member = options.getMentionable("user") as GuildMember;
 		const reason = options.getString("reason");
 
-		if (await shorkCache.hGetAll('warnings')) { 
+		/* if (await shorkCache.hGetAll('warnings')) { 
 			await shorkCache.hSet('warnings', {})
-		}
+		} */
 
-		const warnings = await shorkCache.hGetAll('warnings')
+		// Timeout user for a small time.
 
-		console.log(warnings)
+		await member.timeout(5 * 60 * 1000, reason as string)
+
+		if (interaction.isRepliable()) (interaction as ChatInputCommandInteraction).reply(`${member.user.username} has been warned for ${reason}`)
 	},
 };
