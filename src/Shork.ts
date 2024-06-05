@@ -68,7 +68,7 @@ class Shork extends Client {
 			await this.login(token);
 			return true;
 		} catch (error) {
-			this.logger.log(`Error with starting: ${error}`, LogType.ERROR);
+			this.logger.log(`${error}`, LogType.ERROR);
 			return false;
 		}
 	}

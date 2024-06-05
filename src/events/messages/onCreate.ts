@@ -23,6 +23,10 @@ async function isEnglish(messageContent: string): Promise<boolean> {
     return true
 }
 
+async function flagMessage(message: Message) {
+	
+}
+
 export default {
     name: Events.MessageCreate,
      execute: async (message: Message) => {
